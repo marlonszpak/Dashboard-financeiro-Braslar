@@ -1,0 +1,1 @@
+principal_color = '#4059AD'
