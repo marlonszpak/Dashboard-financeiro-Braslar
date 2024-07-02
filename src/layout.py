@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 from src.styles.colors import *
 from src.components.stat_cards import *
 import pandas as pd
-import dash_core_components as dcc
+# import dash_core_components as dcc
 from datetime import date
 
 tab_style = {
