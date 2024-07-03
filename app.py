@@ -71,13 +71,13 @@ def getDataExtrato():
 
 @app.callback(
     Output('tabs-content', 'children'),
-    Input('graph-tabs', 'value'),
+    # Input('graph-tabs', 'value'),
     Input('submit-button', 'n_clicks'),
     State('input-on-submit-text', 'value'),
     Input('my-date-picker-range', 'start_date'),
     Input('my-date-picker-range', 'end_date')
 )
-def update_tab(tab, clicks, text, start_date, end_date):
+def update_tab(clicks, text, start_date, end_date):
     if clicks > 0 :
         fig1 = dash1.update_opening_balance(text, start_date, end_date)
         return html.Div([
@@ -86,7 +86,7 @@ def update_tab(tab, clicks, text, start_date, end_date):
             ], style={'width': '100%', 'display': 'inline-block'}),
             ])
     else:
-        if tab == 'overview':
+        # if tab == 'overview':
             # fig1, fig2, fig3, fig4 = generate_visualizations1(db_data)
             fig1 = dash1.generate_visualizations(start_date, end_date)
             return html.Div([
@@ -103,42 +103,42 @@ def update_tab(tab, clicks, text, start_date, end_date):
             #     dcc.Graph(id='graph4', figure=fig4),
             # ], style={'width': '50%', 'display': 'inline-block'})
         ])
-        elif tab == 'content_creators':
-            fig1, fig2, fig3, fig4 = generate_visualizations2(json_data)
-            return html.Div([
-            html.Div([
-                dcc.Graph(id='graph1', figure=fig1),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            html.Div([
-                dcc.Graph(id='graph2', figure=fig2),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            html.Div([
-                dcc.Graph(id='graph3', figure=fig3),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            html.Div([
-                dcc.Graph(id='graph4', figure=fig4),
-            ], style={'width': '50%', 'display': 'inline-block'})
-        ])
-        elif tab == 'parental':
-            fig1, fig2 = generate_visualizations3(json_data)
-            return html.Div([
-            html.Div([
-                dcc.Graph(id='graph1', figure=fig1),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            html.Div([
-                dcc.Graph(id='graph2', figure=fig2),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            ])
-        elif tab == 'year':
-            fig1, fig2 = generate_visualizations4(json_data)
-            return html.Div([
-            html.Div([
-                dcc.Graph(id='graph1', figure=fig1),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            html.Div([
-                dcc.Graph(id='graph2', figure=fig2),
-            ], style={'width': '50%', 'display': 'inline-block'}),
-            ])
+        # elif tab == 'content_creators':
+        #     fig1, fig2, fig3, fig4 = generate_visualizations2(json_data)
+        #     return html.Div([
+        #     html.Div([
+        #         dcc.Graph(id='graph1', figure=fig1),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     html.Div([
+        #         dcc.Graph(id='graph2', figure=fig2),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     html.Div([
+        #         dcc.Graph(id='graph3', figure=fig3),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     html.Div([
+        #         dcc.Graph(id='graph4', figure=fig4),
+        #     ], style={'width': '50%', 'display': 'inline-block'})
+        # ])
+        # elif tab == 'parental':
+        #     fig1, fig2 = generate_visualizations3(json_data)
+        #     return html.Div([
+        #     html.Div([
+        #         dcc.Graph(id='graph1', figure=fig1),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     html.Div([
+        #         dcc.Graph(id='graph2', figure=fig2),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     ])
+        # elif tab == 'year':
+        #     fig1, fig2 = generate_visualizations4(json_data)
+        #     return html.Div([
+        #     html.Div([
+        #         dcc.Graph(id='graph1', figure=fig1),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     html.Div([
+        #         dcc.Graph(id='graph2', figure=fig2),
+        #     ], style={'width': '50%', 'display': 'inline-block'}),
+        #     ])
         
 @app.callback(
     Output('stats_card_values', 'children'),
