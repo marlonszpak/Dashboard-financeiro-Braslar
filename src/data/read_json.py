@@ -35,12 +35,12 @@ def get_json_data() -> pd.DataFrame:
 
     pd.set_option('future.no_silent_downcasting', True)
     if(~projetado.empty & ~realizado.empty):
-      return pd.merge(realizado, projetado, on="Data", how="outer").fillna(0, inplace=True)
+        return pd.merge(realizado, projetado, on="Data", how="outer").fillna(0)
 
     if(projetado.empty & ~realizado.empty):
-        return realizado.fillna(0, inplace=True)
+        return realizado.fillna(0)
 
     if(realizado.empty & ~projetado.empty):
-        return projetado.fillna(0, inplace=True)
+        return projetado.fillna(0)
 
     return pd.DataFrame()

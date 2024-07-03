@@ -9,6 +9,32 @@ class Stat_Cards:
     def __init__(self, df):
         self.df = df
 
+    def calcular_saldo(self, opening_balance, start_date, end_date) -> pd.DataFrame:        
+        start_date_object = date.fromisoformat(start_date)
+        start_date_string = start_date_object.strftime('%Y%m%d')
+        end_date_object = date.fromisoformat(end_date)
+        end_date_string = end_date_object.strftime('%Y%m%d')
+        
+        self.df['Data'] = pd.to_datetime(self.df['Data'], format='%Y%m%d')
+        
+        dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)]
+
+        saldos = np.array([[start_date_object - timedelta(days=1),opening_balance]])
+        if(opening_balance is None):
+            saldo_atual = 0
+        else:
+            saldo_atual = opening_balance
+
+        for index, row in dff.iterrows():
+            saldo_atual += (row['Recebido'] - row['Pago'])
+            saldo_atual += (row['Receber'] - row['Pagar'])
+            array_saldo_atual = np.array([[row['Data'], saldo_atual]])
+            saldos = np.append(saldos, array_saldo_atual, axis=0)
+
+        dataset = pd.DataFrame(saldos, columns=['Data', 'Saldo'])
+
+        return dataset
+
     # def generate_stats_card (title, value, image_path, start_date, end_date):
     def generate_stats_card(self, title, value, image_path):
         return html.Div(
@@ -55,29 +81,3 @@ class Stat_Cards:
         total_atrasado = total_atrasado.replace('.',',').replace('_','.')
 
         return total_recebido,total_pago,saldo_atual,total_atrasado
-
-    def calcular_saldo(self, opening_balance, start_date, end_date) -> pd.DataFrame:        
-        start_date_object = date.fromisoformat(start_date)
-        start_date_string = start_date_object.strftime('%Y%m%d')
-        end_date_object = date.fromisoformat(end_date)
-        end_date_string = end_date_object.strftime('%Y%m%d')
-        
-        self.df['Data'] = pd.to_datetime(self.df['Data'], format='%Y%m%d')
-        
-        dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)]
-
-        saldos = np.array([[start_date_object - timedelta(days=1),opening_balance]])
-        if(opening_balance is None):
-            saldo_atual = 0
-        else:
-            saldo_atual = opening_balance
-
-        for index, row in dff.iterrows():
-            saldo_atual += (row['Recebido'] - row['Pago'])
-            saldo_atual += (row['Receber'] - row['Pagar'])
-            array_saldo_atual = np.array([[row['Data'], saldo_atual]])
-            saldos = np.append(saldos, array_saldo_atual, axis=0)
-
-        dataset = pd.DataFrame(saldos, columns=['Data', 'Saldo'])
-
-        return dataset
