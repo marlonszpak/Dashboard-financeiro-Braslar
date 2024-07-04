@@ -38,10 +38,6 @@ def create_layout(app: Dash, source: pd.DataFrame, stat_cards: Stat_Cards)-> htm
         dbc.Row([
             dbc.Col(
                 dcc.Tabs(id='graph-tabs', value='overview', children=[
-                    # dcc.Tab(label='Consolidado', value='overview',style=tab_style['idle'],selected_style=tab_style['active']),
-                    # dcc.Tab(label='Contas a receber', value='content_creators',style=tab_style['idle'],selected_style=tab_style['active']),
-                    # dcc.Tab(label='Contas a pagar', value='parental',style=tab_style['idle'],selected_style=tab_style['active']),
-                    # dcc.Tab(label='Fluxo de caixa', value='year',style=tab_style['idle'],selected_style=tab_style['active'])
                 ], style={'width':'600px','height':'10px'})
             ,width=6),
         ]),
