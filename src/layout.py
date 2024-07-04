@@ -38,19 +38,20 @@ def create_layout(app: Dash, source: pd.DataFrame, stat_cards: Stat_Cards)-> htm
         dbc.Row([
             dbc.Col(
                 dcc.Tabs(id='graph-tabs', value='overview', children=[
-                    dcc.Tab(label='Consolidado', value='overview',style=tab_style['idle'],selected_style=tab_style['active']),
-                    dcc.Tab(label='Contas a receber', value='content_creators',style=tab_style['idle'],selected_style=tab_style['active']),
-                    dcc.Tab(label='Contas a pagar', value='parental',style=tab_style['idle'],selected_style=tab_style['active']),
-                    dcc.Tab(label='Fluxo de caixa', value='year',style=tab_style['idle'],selected_style=tab_style['active'])
-                ], style={'marginTop': '15px', 'width':'600px','height':'50px'})
+                    # dcc.Tab(label='Consolidado', value='overview',style=tab_style['idle'],selected_style=tab_style['active']),
+                    # dcc.Tab(label='Contas a receber', value='content_creators',style=tab_style['idle'],selected_style=tab_style['active']),
+                    # dcc.Tab(label='Contas a pagar', value='parental',style=tab_style['idle'],selected_style=tab_style['active']),
+                    # dcc.Tab(label='Fluxo de caixa', value='year',style=tab_style['idle'],selected_style=tab_style['active'])
+                ], style={'width':'600px','height':'10px'})
             ,width=6),
         ]),
         dbc.Row([       
-            dbc.Col(stat_cards.generate_stats_card("Recebido",'0',"./assets/recebidos.png"), width=3),
-            dbc.Col(stat_cards.generate_stats_card("Pago", '0',"./assets/pagos.png"), width=3),
-            dbc.Col(stat_cards.generate_stats_card("Saldo Final",'0',"./assets/saldo-atual.png"), width=3),
-            dbc.Col(stat_cards.generate_stats_card("Total Atrasado",'0',"./assets/total-atrasado.png"), width=3),
-        ],id="stats_card_values", style={'marginBlock': '10px', 'maxWidth': '86vw'}),
+            dbc.Col(stat_cards.generate_stats_card("Recebido",'0',"./assets/recebidos.png")),
+            dbc.Col(stat_cards.generate_stats_card("Pago", '0',"./assets/pagos.png")),
+            dbc.Col(stat_cards.generate_stats_card("Saldo Final",'0',"./assets/saldo-atual.png")),
+            dbc.Col(stat_cards.generate_stats_card("Total Atrasado",'0',"./assets/total-atrasado.png")),
+            dbc.Col(stat_cards.generate_stats_card("Total",'0',"./assets/total-atrasado.png"))
+        ],id="stats_card_values", style={'maxWidth': '100vw'}),
         html.Div([
             dcc.DatePickerRange(
                 id='my-date-picker-range',
