@@ -58,11 +58,17 @@ class Stat_Cards:
 
         dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)]
 
-        total_recebido = (dff["Receber"].sum() + dff["Recebido"].sum())
+        total_recebido = dff["Recebido"].sum()
         total_recebido = f'R$ {total_recebido:_.2f}'
+
+        total_receber = dff["Receber"].sum()
+        total_receber = f'R$ {total_receber:_.2f}'
     
-        total_pago = (dff["Pagar"].sum() + dff["Pago"].sum())
+        total_pago = dff["Pago"].sum()
         total_pago = f'R$ {total_pago:_.2f}'
+
+        total_pagar = dff["Pagar"].sum()
+        total_pagar = f'R$ {total_pagar:_.2f}'
 
         saldo_atual = saldo["Saldo"].iloc[-1]
         saldo_atual = f'R$ {saldo_atual:_.2f}'
@@ -72,12 +78,14 @@ class Stat_Cards:
         data_atual = date.today().strftime('%Y%m%d')
         dff2 = self.df[(self.df.Data < data_atual)]
 
-        total_atrasado = dff2["Receber"].sum()
-        total_atrasado = f'R$ {total_atrasado:_.2f}'
+        # total_atrasado = dff2["Receber"].sum()
+        # total_atrasado = f'R$ {total_atrasado:_.2f}'
 
         total_recebido = total_recebido.replace('.',',').replace('_','.')
+        total_receber = total_receber.replace('.',',').replace('_','.')
         total_pago = total_pago.replace('.',',').replace('_','.')
+        total_pagar = total_pagar.replace('.',',').replace('_','.')
         saldo_atual = saldo_atual.replace('.',',').replace('_','.')
-        total_atrasado = total_atrasado.replace('.',',').replace('_','.')
+        # total_atrasado = total_atrasado.replace('.',',').replace('_','.')
 
-        return total_recebido,total_pago,saldo_atual,total_atrasado
+        return total_recebido, total_receber, total_pago, total_pagar, saldo_atual

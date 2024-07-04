@@ -148,14 +148,14 @@ def update_tab(clicks, text, start_date, end_date):
     Input('my-date-picker-range', 'end_date')
 )
 def update_stat_cards_values(clicks, text, start_date, end_date):
-    total_recebido,total_pago,saldo_atual,total_faturado = stat_cards.get_constants(clicks, text, start_date, end_date)
+    total_recebido, total_receber, total_pago, total_pagar, saldo_atual = stat_cards.get_constants(clicks, text, start_date, end_date)
 
     return html.Div([
-        dbc.Col(stat_cards.generate_stats_card("Recebido",total_recebido,"./assets/recebidos.png")),
-        dbc.Col(stat_cards.generate_stats_card("Pago", total_pago,"./assets/pagos.png")),
-        dbc.Col(stat_cards.generate_stats_card("Saldo Final",saldo_atual,"./assets/saldo-atual.png")),
-        dbc.Col(stat_cards.generate_stats_card("Total Atrasado",total_faturado,"./assets/total-atrasado.png")),
-        dbc.Col(stat_cards.generate_stats_card("Total Atrasado",'0',"./assets/total-atrasado.png"))
+        dbc.Col(stat_cards.generate_stats_card("Pago", total_pago,"./assets/saldo-atual.png")),
+        dbc.Col(stat_cards.generate_stats_card("Recebido", total_recebido,"./assets/recebidos.png")),
+        dbc.Col(stat_cards.generate_stats_card("Pagar", total_pagar,"./assets/total-atrasado.png")),
+        dbc.Col(stat_cards.generate_stats_card("Receber", total_receber,"./assets/pagos.png")),
+        dbc.Col(stat_cards.generate_stats_card("Saldo Atual", saldo_atual,"./assets/saldo-final.png"))
     ], style={'display': 'flex', 'flex-direction': 'row', 'gap': '10px'})
 
 if __name__ == '__main__':

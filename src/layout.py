@@ -50,7 +50,7 @@ def create_layout(app: Dash, source: pd.DataFrame, stat_cards: Stat_Cards)-> htm
             dbc.Col(stat_cards.generate_stats_card("Pago", '0',"./assets/pagos.png")),
             dbc.Col(stat_cards.generate_stats_card("Saldo Final",'0',"./assets/saldo-atual.png")),
             dbc.Col(stat_cards.generate_stats_card("Total Atrasado",'0',"./assets/total-atrasado.png")),
-            dbc.Col(stat_cards.generate_stats_card("Total",'0',"./assets/total-atrasado.png"))
+            dbc.Col(stat_cards.generate_stats_card("Total",'0',"./assets/saldo-final.png"))
         ],id="stats_card_values", style={'maxWidth': '100vw'}),
         html.Div([
             dcc.DatePickerRange(
