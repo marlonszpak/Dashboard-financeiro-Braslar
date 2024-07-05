@@ -5,7 +5,6 @@ from src.components.stat_cards import *
 import pandas as pd
 # import dash_core_components as dcc
 from datetime import date
-import ipywidgets as widgets
 
 tab_style = {
     'idle':{
