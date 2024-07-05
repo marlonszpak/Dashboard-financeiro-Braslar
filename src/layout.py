@@ -5,6 +5,7 @@ from src.components.stat_cards import *
 import pandas as pd
 # import dash_core_components as dcc
 from datetime import date
+import ipywidgets as widgets
 
 tab_style = {
     'idle':{
@@ -62,6 +63,9 @@ def create_layout(app: Dash, source: pd.DataFrame, stat_cards: Stat_Cards)-> htm
                 style={'height': '50px'}
             ),
             dcc.Input(id='input-on-submit-text', type='number', placeholder='Digite o saldo inicial', style={'border': '1px solid #007bff', 'border-radius': '5px', 'width': '250px', 'height': '48px'}),
+            dcc.RadioItems(id='radio-button',
+            options=[{'label': 'Previsto', 'value': '1'},
+                     {'label': 'Efetivo', 'value': '2'},],value='1', style={'color': 'white'}),
             html.Button('Calcular', id='submit-button', n_clicks=0, style={'background-color': '#007bff', 'color': 'white', 'height': '48px', 'border': 'none', 'border-radius': '5px','cursor': 'pointer', 'width': '250px'})
         ],style={'display': 'flex', 'width': '80vw', 'height': '7vh','margin': '10px 0px', 'gap': '10px'}),
         # dbc.Row([

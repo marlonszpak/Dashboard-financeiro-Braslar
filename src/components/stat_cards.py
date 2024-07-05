@@ -9,7 +9,7 @@ class Stat_Cards:
     def __init__(self, df):
         self.df = df
 
-    def calcular_saldo(self, opening_balance, start_date, end_date) -> pd.DataFrame:        
+    def calcular_saldo(self, opening_balance, start_date, end_date, radio_value) -> pd.DataFrame:        
         start_date_object = date.fromisoformat(start_date)
         start_date_string = start_date_object.strftime('%Y%m%d')
         end_date_object = date.fromisoformat(end_date)
@@ -27,7 +27,8 @@ class Stat_Cards:
 
         for index, row in dff.iterrows():
             saldo_atual += (row['Recebido'] - row['Pago'])
-            saldo_atual += (row['Receber'] - row['Pagar'])
+            if radio_value == '1':
+                saldo_atual += (row['Receber'] - row['Pagar'])
             array_saldo_atual = np.array([[row['Data'], saldo_atual]])
             saldos = np.append(saldos, array_saldo_atual, axis=0)
 
@@ -47,9 +48,12 @@ class Stat_Cards:
             ], style={'paddingBlock':'10px',"backgroundColor": principal_color,'border':'none','borderRadius':'10px'})
         )
     
-    def get_constants(self, clicks, opening_balance, start_date, end_date):
+
+    
+    def get_constants(self, clicks, opening_balance, start_date, end_date, radio_value):
         # df = pd.DataFrame(source)
-        saldo = self.calcular_saldo(opening_balance, start_date, end_date)
+
+        saldo = self.calcular_saldo(opening_balance, start_date, end_date, radio_value)
 
         start_date_object = date.fromisoformat(start_date)
         start_date_string = start_date_object.strftime('%Y%m%d')

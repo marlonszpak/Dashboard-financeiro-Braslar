@@ -75,11 +75,12 @@ def getDataExtrato():
     Input('submit-button', 'n_clicks'),
     State('input-on-submit-text', 'value'),
     Input('my-date-picker-range', 'start_date'),
-    Input('my-date-picker-range', 'end_date')
+    Input('my-date-picker-range', 'end_date'),
+    Input('radio-button', 'value')
 )
-def update_tab(clicks, text, start_date, end_date):
+def update_tab(clicks, text, start_date, end_date, radio_value):
     if clicks > 0 :
-        fig1 = dash1.update_opening_balance(text, start_date, end_date)
+        fig1 = dash1.update_opening_balance(text, start_date, end_date, radio_value)
         return html.Div([
             html.Div([
                 dcc.Graph(id='graph1', figure=fig1),
@@ -145,10 +146,11 @@ def update_tab(clicks, text, start_date, end_date):
     Input('submit-button', 'n_clicks'),
     State('input-on-submit-text', 'value'),
     Input('my-date-picker-range', 'start_date'),
-    Input('my-date-picker-range', 'end_date')
+    Input('my-date-picker-range', 'end_date'),
+    Input('radio-button', 'value')
 )
-def update_stat_cards_values(clicks, text, start_date, end_date):
-    total_recebido, total_receber, total_pago, total_pagar, saldo_atual = stat_cards.get_constants(clicks, text, start_date, end_date)
+def update_stat_cards_values(clicks, text, start_date, end_date, radio_value):
+    total_recebido, total_receber, total_pago, total_pagar, saldo_atual = stat_cards.get_constants(clicks, text, start_date, end_date, radio_value)
 
     return html.Div([
         dbc.Col(stat_cards.generate_stats_card("Pago", total_pago,"./assets/saldo-atual.png")),

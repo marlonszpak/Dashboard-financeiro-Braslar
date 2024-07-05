@@ -20,7 +20,7 @@ class Dash1:
         else:
             return str(number)
     
-    def calcular_saldo(self, opening_balance, start_date_object, end_date_object) -> pd.DataFrame:        
+    def calcular_saldo(self, opening_balance, start_date_object, end_date_object, radio_value) -> pd.DataFrame:        
         start_date_string = start_date_object.strftime('%Y%m%d')
         end_date_string = end_date_object.strftime('%Y%m%d')
     
@@ -28,12 +28,16 @@ class Dash1:
     
         dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)]
 
+        if opening_balance is None:
+            opening_balance = 0
+
         saldos = np.array([[start_date_object - timedelta(days=1),opening_balance]])
         saldo_atual = opening_balance
     
         for index, row in dff.iterrows():
             saldo_atual += (row['Recebido'] - row['Pago'])
-            saldo_atual += (row['Receber'] - row['Pagar'])
+            if radio_value == '1':
+                saldo_atual += (row['Receber'] - row['Pagar'])
             array_saldo_atual = np.array([[row['Data'], saldo_atual]])
             saldos = np.append(saldos, array_saldo_atual, axis=0)
 
@@ -60,17 +64,17 @@ class Dash1:
 
         # Adiciona o segundo traço de barras
         fig.add_trace(
-            go.Bar(name='Recebido', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Recebido, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#0066CC'))
+            go.Bar(name='Recebido', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Recebido, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#00CC00'))
         )
 
          # Adiciona o primeiro traço de barras
         fig.add_trace(
-            go.Bar(name='Pagar', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Pagar, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#3333FF'))
+            go.Bar(name='Pagar', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Pagar, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#CC6600'))
         )
 
         # Adiciona o segundo traço de barras
         fig.add_trace(
-            go.Bar(name='Receber', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Receber, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#CC6600'))
+            go.Bar(name='Receber', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Receber, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#3333FF'))
         )
 
         # Adiciona o traço de linha
@@ -87,7 +91,7 @@ class Dash1:
         return fig
     
 
-    def update_opening_balance(self, opening_balance, start_date, end_date):
+    def update_opening_balance(self, opening_balance, start_date, end_date, radio_value):
         start_date_object = date.fromisoformat(start_date)
         start_date_string = start_date_object.strftime('%Y%m%d')
         end_date_object = date.fromisoformat(end_date)
@@ -95,13 +99,13 @@ class Dash1:
 
         dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)]
 
-        saldos = self.calcular_saldo(opening_balance, start_date_object, end_date_object)
+        saldos = self.calcular_saldo(opening_balance, start_date_object, end_date_object, radio_value)
 
         fig = go.Figure()
 
         # Adiciona o traço de linha
         fig.add_trace(
-            go.Scatter(name='Saldo', x=pd.to_datetime(saldos.Data).dt.strftime('%d/%m/%y'), y=saldos.Saldo, texttemplate='R$%{y:,s}', marker=dict(color='#33FF33'), mode='lines+markers') 
+            go.Scatter(name='Saldo', x=pd.to_datetime(saldos.Data).dt.strftime('%d/%m/%y'), y=saldos.Saldo, texttemplate='R$%{y:,s}', marker=dict(color='#FFFF00'), mode='lines+markers') 
         )
 
         # Adiciona o primeiro traço de barras
@@ -111,17 +115,17 @@ class Dash1:
 
         # Adiciona o segundo traço de barras
         fig.add_trace(
-            go.Bar(name='Recebido', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Recebido, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#0066CC'))
+            go.Bar(name='Recebido', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Recebido, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#00CC00'))
         )
 
          # Adiciona o primeiro traço de barras
         fig.add_trace(
-            go.Bar(name='Pagar', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Pagar, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#3333FF'))
+            go.Bar(name='Pagar', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Pagar, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#CC6600'))
         )
 
         # Adiciona o segundo traço de barras
         fig.add_trace(
-            go.Bar(name='Receber', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Receber, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#CC6600'))
+            go.Bar(name='Receber', x=pd.to_datetime(dff.Data).dt.strftime('%d/%m/%y'), y=dff.Receber, texttemplate='R$%{y:,s}', textposition='outside', marker=dict(color='#3333FF'))
         )
 
             
