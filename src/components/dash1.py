@@ -98,8 +98,11 @@ class Dash1:
         end_date_string = end_date_object.strftime('%Y%m%d')
 
         dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)].sort_values(by = 'Data')
+        # dff = self.df[(self.df.Data >= start_date_string) & (self.df.Data <= end_date_string)]
 
-        saldos = self.calcular_saldo(opening_balance, start_date_object, end_date_object, radio_value).sort_values(by = 'Data')
+        # saldos = self.calcular_saldo(opening_balance, start_date_object, end_date_object, radio_value).sort_values(by = 'Data')
+        saldos = self.calcular_saldo(opening_balance, start_date_object, end_date_object, radio_value)
+
 
         fig = go.Figure()
 
